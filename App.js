@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
 import * as Sharing from 'expo-sharing'
+import styled from 'styled-components'
+import Button from './src/components/Button'
 
 export default function App() {
   const [selectedImage, setSelectedImage] = React.useState(null);
@@ -38,70 +39,46 @@ export default function App() {
 
   if (selectedImage !== null) {
     return (
-      <View style={styles.container}>
-        <Image source={{ uri: selectedImage.localUri }} style={styles.thumbnail} />
-        <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
-          <Text style={styles.buttonText}>Share this photo</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={clearSelectedImg} style={styles.buttonMt}>
-          <Text style={styles.buttonText}>Go back</Text>
-        </TouchableOpacity>
-      </View>
+      <StyledView>
+        <StyledThumbnail source={{ uri: selectedImage.localUri }} />
+        <Button onPress={openShareDialogAsync} text='Share this photo' />
+        <Button onPress={clearSelectedImg} text='Go back' marginTop />
+      </StyledView>
     )
   }
   
   return (
-    <View style={styles.container}>
-      <Image source={{ uri: "https://i.imgur.com/TkIrScD.png" }} style={styles.logo} />
-      <Text style={styles.instructions}>
+    <StyledView>
+      <StyledImage source={{ uri: "https://i.imgur.com/TkIrScD.png" }} />
+      <StyledText>
         To share a photo from your phone with a friend, just press the button below!
-      </Text>
-      <TouchableOpacity
-        onPress={openImagePickerAsync}
-        style={styles.button}>
-        <Text style={styles.buttonText}>Pick a photo</Text>
-      </TouchableOpacity>
-    </View>
+      </StyledText>
+      <Button onPress={openImagePickerAsync} text='Pick a photo' />
+    </StyledView>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  logo: {
-    width: 305,
-    height: 159,
-    marginBottom: 20
-  },
-  instructions: {
-    color: '#888',
-    fontSize: 18,
-    marginHorizontal: 15,
-    marginBottom: 10
-  },
-  button: {
-    backgroundColor: 'blue',
-    padding: 20,
-    borderRadius: 5
-  },
-  buttonMt: {
-    backgroundColor: 'blue',
-    padding: 20,
-    borderRadius: 5,
-    marginTop: 10
-  },
-  buttonText: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: "bold"
-  },
-  thumbnail: {
-    width: 300,
-    height: 300,
-    resizeMode: 'contain'
-  }
-});
+const StyledView = styled.View`
+    flex: 1;
+    background-color: #FFF;
+    align-items: center;
+    justify-content: center;
+`
+
+const StyledImage = styled.Image`
+    width: 305px;
+    height: 159px;
+    margin-bottom: 20px;
+`
+
+const StyledText = styled.Text`
+    color: #888;
+    font-size: 18px;
+    margin: 0 15px 10px;
+`
+
+const StyledThumbnail = styled.Image`
+  width: 300px;
+  height: 300px;
+  resize-mode: contain;
+`
