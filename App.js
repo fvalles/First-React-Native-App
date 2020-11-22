@@ -32,12 +32,19 @@ export default function App() {
     await Sharing.shareAsync(selectedImage.localUri);
   }
 
+  let clearSelectedImg = () => {
+    setSelectedImage(null);
+  }
+
   if (selectedImage !== null) {
     return (
       <View style={styles.container}>
         <Image source={{ uri: selectedImage.localUri }} style={styles.thumbnail} />
         <TouchableOpacity onPress={openShareDialogAsync} style={styles.button}>
           <Text style={styles.buttonText}>Share this photo</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={clearSelectedImg} style={styles.buttonMt}>
+          <Text style={styles.buttonText}>Go back</Text>
         </TouchableOpacity>
       </View>
     )
@@ -80,6 +87,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     padding: 20,
     borderRadius: 5
+  },
+  buttonMt: {
+    backgroundColor: 'blue',
+    padding: 20,
+    borderRadius: 5,
+    marginTop: 10
   },
   buttonText: {
     fontSize: 20,
